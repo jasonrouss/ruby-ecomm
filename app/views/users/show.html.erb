@@ -1,0 +1,21 @@
+<h1>User Profile</h1>
+
+<h2>Personal Information</h2>
+<p>Email: <%= @user.email %></p>
+<p>Name: <%= @user.name %></p>
+<p>Last Name: <%= @user.last_name %></p>
+
+<h2>Shipping Address</h2>
+<p><%= @user.shipping_address %></p>
+
+<h2>Billing Address</h2>
+<p><%= @user.billing_address %></p>
+
+<h2>Saved Cards</h2>
+<% @user.cards.each do |card| %>
+  <p>Card Number: <%= card.number %></p>
+  <p>Card Expiry: <%= card.expiry %></p>
+  <!-- Display other card details as needed -->
+<% end %>
+
+<%= link_to 'Edit Profile', edit_user_path(@user) %>

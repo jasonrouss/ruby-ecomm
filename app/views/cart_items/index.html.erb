@@ -1,0 +1,37 @@
+<div class=" text-gray-700">
+  <div class="text-[33px] text-green-600 font-bold">Cart</div>
+
+  <% @cart_items.each do |cart_item| %>
+    <!-- Cart item details -->
+    <div class="my-4 px-2 py-2 bg-gray-200 rounded-lg">
+      <p class=" text-[18px] "><span class="font-bold ">Name: </span> <%= cart_item.name %></p>
+      <div class="flex justify mt-4"> 
+        <p class=" text-[18px]  "><span class="font-bold ">Price: </span> <%= cart_item.price %>$</p>
+        <div class="flex justify mx-4 font-bold text-[18px]"><span class="font-bold ">Quantity:</span> 
+          <%= button_to "-", decrement_quantity_cart_item_path(cart_item), method: :patch, class: "px-2 mx-2 font-bold  border-2 border-gray-700  hover:bg-slate-100 bg-slate-50  text-gray-700   rounded-lg hover:rounded-full", remote: true %>
+          <%= cart_item.quantity %>
+          <%= button_to "+", increment_quantity_cart_item_path(cart_item), method: :patch, class: "px-2 mx-2 font-bold  border-2 border-gray-700  hover:bg-slate-100 bg-slate-50  text-gray-700   rounded-lg hover:rounded-full", remote: true %>
+        </div>
+      </div>
+      <div class="flex justify mt-4">
+        <p class=" text-[18px]"><span class="font-bold ">Size: </span><%= cart_item.size %></p>
+        <p class="mx-5 text-[18px]" ><span class="font-bold ">Color: </span><%= cart_item.color %></p>
+      </div>
+      <%= button_to "Remove", cart_item_path(cart_item), method: :delete, class: "px-2 py-2 my-4 font-bold border-2 border-red-800  hover:bg-red-700 bg-red-500 text-white  rounded-lg hover:rounded-full ", data: { confirm: "Are you sure you want to remove this item from the cart?" } %>
+    </div>
+    <hr>
+  <% end %>
+ 
+  <div class="flex justify-between mb-12">
+  <!-- Total -->
+  <div class=" text-[18px] text-green-500 font-bold mt-2">
+    Total: <%= number_to_currency(@cart_items.sum(&:price)) %>
+  </div>
+<% if current_user.cart_items.count > 0 %>
+
+  <!-- Checkout button -->
+    <%= button_to "Checkout", cart_items_checkout_path, method: :get, class: "mx-6 px-2 py-2 font-bold border-2 border-green-800 hover:bg-green-700 bg-green-600 text-white rounded-lg hover:rounded-full", data: { confirm: "Proceed to checkout?" } %>
+  </div>
+<% end %>
+
+</div>

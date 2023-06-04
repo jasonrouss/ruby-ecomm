@@ -1,0 +1,202 @@
+<div class="mx-8">
+  <div class="max-w-md mx-auto mt-8 text-gray-700">
+    <h1 class=" font-bold mb-4  text-green-600 text-[30px]">User Profile</h1>
+    <p class="mt-8 mb-4 text-[18px]"><span class="font-bold">Email:</span> <%= @user.email %></p>
+    <p class="mb-4 text-[18px]"><span class="font-bold">Name:</span> <%= @user.first_name %></p>
+    <p class="mb-8 text-[18px]"><span class="font-bold">Last Name:</span> <%= @user.last_name %></p>
+
+    <!-- Add additional details and information as needed -->
+
+    <div class="mt-4 flex justify-center">
+      <%= link_to 'Edit Profile', edit_user_registration_path, class: 'px-2 py-2 font-bold border-2 border-green-700 hover:bg-slate-100 bg-slate-50 text-green-600 rounded-lg hover:rounded-full' %>
+    </div>
+
+    
+    
+    <% if @user_info.street.present? %>
+      <!-- User Information -->
+
+        <div class="my-8 uinfo">
+          <h2 class=" font-bold mb-4 text-green-600 text-[30px]">Shipping address</h2>
+
+        </div>
+
+        <div class="my-8 uinfo flex text-[18px]">
+
+        <%= @user_info.street %>  <%= @user_info.city %> , <%= @user_info.state %> , <%= @user_info.zip %>   <div class="mx-2">  <%= ISO3166::Country[@user_info.country] %> </div>
+            
+
+        </div>
+    
+      <% end %>
+        <% if @payment_info.street.present? %>
+    
+        <!-- Payment  Information -->
+
+        <div class="my-8 pinfo">
+          <h2 class=" font-bold my-4 text-green-600 text-[30px]">Billing Address: </h2>
+
+          <div class="flex text-[18px]">
+            <%= @payment_info.street %>
+        
+
+        <%= @payment_info.city %> ,
+        
+        <%= @payment_info.state %> ,
+      
+          <%= @payment_info.zip %> 
+      
+            <%= ISO3166::Country[@payment_info.country] %>
+    
+    
+  
+      
+          </div>
+          <h2 class=" font-bold my-4 text-green-600 text-[30px]"> Saved card details </h2>
+
+          <div class="flex  justify-between my-4 text-[18px]">
+              <%= @payment_info.first_name %>
+            <%= @payment_info.last_name %>
+          </div>
+            <div class="flex gap-4 my-4 text-[18px]">
+              <div >Credit card number:</div>
+              <div>Expiry date:</div> 
+            <div>Security code: </div>
+          </div>
+          <div class="flex  my-4 text-[18px]">
+            <div><%= @payment_info.credit_card_number %></div>
+            <div class="ml-[173px]"><%= @payment_info.expiration_date %></div>
+            <div class="ml-[95px]"><%= @payment_info.security_code %></div>
+          </div>
+        <% end %>
+
+
+    
+    <!-- Add UserInfo Form -->
+
+      <div class="mt-8 uform">
+      <%= form_for @user_info, url: user_infos_path, method: :patch, class: "mt-4" do |f| %>
+        <h2 class=" font-bold mb-4 text-green-600 text-[30px]">Edit User Information: </h2>
+
+          <div class="flex justify-between my-4 gap-8 ">
+            <div class="mb-4">
+              <%= f.label :street, class: "block font-bold mb-1" %>
+              <%= f.text_field :street, class: "form-input" %>
+            </div>
+
+            <div class="mb-4">
+              <%= f.label :city, class: "block font-bold mb-1" %>
+              <%= f.text_field :city, class: "form-input" %>
+            </div>
+
+            <div class="mb-4">
+              <%= f.label :state, class: "block font-bold mb-1" %>
+              <%= f.text_field :state, class: "form-input" %>
+            </div>
+          </div>
+
+          <div class="flex gap-8"> 
+            <div class="mb-4">
+              <%= f.label :zip, class: "block font-bold mb-1" %>
+              <%= f.text_field :zip, class: "form-input" %>
+            </div>
+
+            <div class="mb-4">
+              <%= f.label :country, class: "block font-bold mb-1" %>
+              <%= f.select :country, options_for_select(ISO3166::Country.all.sort_by { |country| country.translations[:en] }.map { |country| [country.translations[:en], country.alpha2] }), {}, class: "form-select w-[200px]" %>
+            </div>
+            </div>
+          <div class="flex justify-center my-8">
+          <%= f.submit 'Save', class: 'px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 hover:rounded-full cursor-pointer' %>
+          </div>
+
+      </div>
+    <% end %>
+
+    <!-- Add PaymentInfo Form -->
+
+  <div class="mt-8 pform">
+    <%= form_for @payment_info, url: payment_infos_path, method: :patch, class: "mt-4" do |f| %>
+      <h2 class=" font-bold mb-4 text-green-600 text-[30px]">Edit Payment Information: </h2>
+
+      <div class="flex justify-between my-4 gap-8">
+        <div class="mb-4">
+          <%= f.label :street, class: "block font-bold mb-1" %>
+          <%= f.text_field :street, class: "form-input" %>
+        </div>
+
+        <div class="mb-4">
+          <%= f.label :city, class: "block font-bold mb-1" %>
+          <%= f.text_field :city, class: "form-input" %>
+        </div>
+
+        <div class="mb-4">
+          <%= f.label :state, class: "block font-bold mb-1" %>
+          <%= f.text_field :state, class: "form-input" %>
+        </div>
+      </div>
+
+      <div class="flex gap-8"> 
+        <div class="mb-4">
+          <%= f.label :zip, class: "block font-bold mb-1" %>
+          <%= f.text_field :zip, class: "form-input" %>
+        </div>
+
+        <div class="mb-4">
+          <%= f.label :country, class: "block font-bold mb-1" %>
+          <%= f.select :country, options_for_select(ISO3166::Country.all.sort_by { |country| country.translations[:en] }.map { |country| [country.translations[:en], country.alpha2] }), {}, class: "form-select w-[200px]" %>
+        </div>
+      </div>
+
+      <div class="flex justify-between my-4 gap-8">
+        <div class="mb-4">
+          <%= f.label :credit_card_number, class: "block font-bold mb-1" %>
+          <%= f.text_field :credit_card_number, class: "form-input" %>
+        </div>
+
+        <div class="mb-4">
+          <%= f.label :expiration_date, class: "block font-bold mb-1" %>
+          <%= f.text_field :expiration_date, class: "form-input" %>
+        </div>
+
+        <div class="mb-4">
+          <%= f.label :security_code, class: "block font-bold mb-1" %>
+          <%= f.text_field :security_code, class: "form-input" %>
+        </div>
+      </div>
+
+      <div class="flex gap-8"> 
+        <div class="mb-4">
+          <%= f.label :first_name, class: "block font-bold mb-1" %>
+          <%= f.text_field :first_name, class: "form-input" %>
+        </div>
+
+        <div class="mb-4">
+          <%= f.label :last_name, class: "block font-bold mb-1" %>
+          <%= f.text_field :last_name, class: "form-input" %>
+        </div>
+      </div>
+
+      <div class="flex justify-center my-8">
+        <%= f.submit 'Save', class: 'px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 hover:rounded-full cursor-pointer' %>
+      </div>
+    <% end %>
+  </div>  
+
+
+
+  </div>
+
+
+
+    
+
+        
+    <!-- Display other fields as needed -->
+  </div>
+
+
+
+
+
+</div>

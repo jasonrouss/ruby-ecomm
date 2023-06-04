@@ -1,0 +1,211 @@
+<div class="text-gray-700 md:flex ">
+   <div>
+     <% if @user_info.street.present? %>
+        <!-- User Information -->
+
+   <div class="my-8 uinfo bg-gray-100 border-2 border-gray-800 p-2 rounded-xl">
+          <h2 class=" font-bold mb-4 text-green-600 text-[18px] ">Shipping address</h2>
+
+
+        <div class="my-4 uinfo flex text-[14px]">
+
+        <%= @user_info.street %>  <%= @user_info.city %> , <%= @user_info.state %> , <%= @user_info.zip %>   <div class="mx-2">  <%= ISO3166::Country[@user_info.country] %> </div>
+            
+        </div>
+
+        </div>
+    <% else %>
+        
+      <div class="mt-8 mx-8 w-[510px] uform bg-gray-100 border-2 border-gray-800 p-2 rounded-xl text-[14px] ">
+        <%= form_for @user_info, url: user_infos_path, method: :patch, class: "mt-4" do |f| %>
+        <h2 class="font-bold mb-4 text-green-600 text-[18px] mb-4">Add your shipping address</h2>
+
+            <div >
+            <div class="mb-4">
+                <%= f.label :street, class: "block font-bold mb-1" %>
+                <%= f.text_field :street, class: "form-input w-full rounded-lg" %>
+            </div>
+
+           
+            </div>
+            <div class="flex justify-between my-4 gap-8 ">
+
+             <div class="mb-4">
+                <%= f.label :city, class: "block font-bold mb-1" %>
+                <%= f.text_field :city, class: "form-input rounded-lg" %>
+            </div>
+
+            <div class="mb-4">
+                <%= f.label :state, class: "block font-bold mb-1" %>
+                <%= f.text_field :state, class: "form-input rounded-lg" %>
+            </div>
+            </div>
+            <div class="flex gap-8"> 
+            <div class="mb-4">
+                <%= f.label :zip, class: "block font-bold mb-1" %>
+                <%= f.text_field :zip, class: "form-input rounded-lg" %>
+            </div>
+
+            <div class="mb-4 mx-4">
+                <%= f.label :country, class: "block font-bold mb-1" %>
+                <%= f.select :country, options_for_select(ISO3166::Country.all.sort_by { |country| country.translations[:en] }.map { |country| [country.translations[:en], country.alpha2] }), {}, class: "form-select w-[200px] rounded-lg" %>
+            </div>
+            </div>
+            <div class="flex justify-center my-4">
+            <%= f.submit 'Save', class: 'px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 hover:rounded-full cursor-pointer' %>
+            </div>
+
+        </div>
+        <% end %>
+
+    <% end %>
+
+    <% if @payment_info.street.present? %>
+         <!-- Payment  Information -->
+
+    
+        <div class="my-8 pinfo  bg-gray-100 border-2 border-gray-800 p-2 rounded-xl">
+          <h2 class=" font-bold my-4 text-green-600 text-[18px] ">Billing Address: </h2>
+
+          <div class="flex text-[14px]">
+            <%= @payment_info.street %>
+        
+
+        <%= @payment_info.city %> ,
+        
+        <%= @payment_info.state %> ,
+      
+          <%= @payment_info.zip %> 
+      
+            <%= ISO3166::Country[@payment_info.country] %>
+    
+    
+  
+      
+          </div>
+          <h2 class=" font-bold my-4 text-green-600 text-[18px]"> Saved card details </h2>
+
+          <div class="flex  justify-between my-4 text-[14px]">
+              <%= @payment_info.first_name %>
+            <%= @payment_info.last_name %>
+          </div>
+            <div class="flex gap-4 my-4 text-[14px]">
+              <div >Credit card number:</div>
+              <div>Expiry date:</div> 
+            <div>Security code: </div>
+          </div>
+          <div class="flex  my-4 text-[14px]">
+            <div><%= @payment_info.credit_card_number %></div>
+            <div class="ml-[142px]"><%= @payment_info.expiration_date %></div>
+            <div class="ml-[75px]"><%= @payment_info.security_code %></div>
+          </div>
+    <% else %>
+          <div class="my-8 mx-8 w-[510px] pform  bg-gray-100 border-2 border-gray-800 p-2 rounded-xl text-[14px]">
+            <%= form_for @payment_info, url: payment_infos_path, method: :patch, class: "mt-4" do |f| %>
+                <h2 class="font-bold mb-4 text-green-600 text-[18px] mb-4">Add your billing address and payment information</h2>
+
+                <div class="flex justify-between my-4 gap-8">
+                <div class="mb-4">
+                    <%= f.label :street, class: "block font-bold mb-1" %>
+                    <%= f.text_field :street, class: "form-input w-full  rounded-lg" %>
+                </div>
+                </div>
+
+                <div class="flex justify-between my-4 gap-8">
+
+                <div class="mb-4">
+                    <%= f.label :city, class: "block font-bold mb-1" %>
+                    <%= f.text_field :city, class: "form-input rounded-lg" %>
+                </div>
+
+                <div class="mb-4">
+                    <%= f.label :state, class: "block font-bold mb-1" %>
+                    <%= f.text_field :state, class: "form-input rounded-lg" %>
+                </div>
+                </div>
+
+                <div class="flex gap-8"> 
+                <div class="mb-4">
+                    <%= f.label :zip, class: "block font-bold mb-1" %>
+                    <%= f.text_field :zip, class: "form-input rounded-lg" %>
+                </div>
+
+                <div class="mb-4 mx-4">
+                    <%= f.label :country, class: "block font-bold mb-1" %>
+                    <%= f.select :country, options_for_select(ISO3166::Country.all.sort_by { |country| country.translations[:en] }.map { |country| [country.translations[:en], country.alpha2] }), {}, class: "form-select w-[200px] rounded-lg" %>
+                </div>
+                </div>
+                <div class="flex gap-8"> 
+                <div class="mb-4">
+                    <%= f.label :first_name, class: "block font-bold mb-1" %>
+                    <%= f.text_field :first_name, class: "form-input rounded-lg" %>
+                </div>
+
+                <div class="mb-4 mx-4">
+                    <%= f.label :last_name, class: "block font-bold mb-1" %>
+                    <%= f.text_field :last_name, class: "form-input  rounded-lg" %>
+                </div>
+                </div>
+
+                <div class="flex justify-between my-4 gap-8">
+                <div class="mb-4">
+                    <%= f.label :credit_card_number, class: "block font-bold mb-1" %>
+                    <%= f.text_field :credit_card_number, class: "form-input w-ful rounded-lg" %>
+                </div>
+                </div>
+                
+                <div class="flex justify-between my-4 gap-8">
+
+                <div class="mb-4">
+                    <%= f.label :expiration_date, class: "block font-bold mb-1" %>
+                    <%= f.text_field :expiration_date, class: "form-input rounded-lg" %>
+                </div>
+
+                <div class="mb-4">
+                    <%= f.label :security_code, class: "block font-bold mb-1" %>
+                    <%= f.text_field :security_code, class: "form-input rounded-lg" %>
+                </div>
+                </div>
+
+
+                <div class="flex justify-center my-4">
+                <%= f.submit 'Save', class: 'px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 hover:rounded-full cursor-pointer' %>
+                </div>
+            <% end %>
+      
+            </div>  
+    <% end %>
+    
+
+    </div>
+      <% if @payment_info.street.present? %>
+
+        <div class="flex justify-center my-8">
+        <%= link_to "Go to Profile page to edit details", user_profile_path, class: "mx-6 px-2 py-2 font-bold border-2 border-green-600 bg-white text-green-600 rounded-lg hover:rounded-full" %>
+      </div>
+      <% end %>
+   
+   
+        </div>
+ <div class="flex mx-12 my-12">
+    <!-- Total -->
+      <div class="text-[20px] text-green-500 font-bold mt-2">
+        Total: <%= number_to_currency(@cart_items.sum(&:price)) %>
+      </div>
+
+      <div class="flex  mx-12 ">  
+      <%= button_to "Thank You", "#", class: "px-2 py-2 font-bold border-2 border-green-800 hover:bg-green-700 bg-green-600 text-white rounded-lg hover:rounded-full", onclick: "showThankYouMessage()" %>
+      </div>
+  </div>
+ </div>  
+      
+
+
+ 
+
+<script>
+  function showThankYouMessage() {
+    alert("Thank you for your purchase!");
+    // You can customize the behavior here, such as showing a popup or performing other actions
+  }
+</script>

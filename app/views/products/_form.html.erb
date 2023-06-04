@@ -1,0 +1,65 @@
+<%= form_with(model: product, local: true) do |form| %>
+  <% if product.errors.any? %>
+    <div id="error_explanation" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mb-4 rounded">
+      <h2 class="font-bold text-lg mb-2"><%= pluralize(product.errors.count, 'error') %> prohibited this product from being saved:</h2>
+
+      <ul>
+        <% product.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+    <div>
+      <%= form.label :name, class: "block text-gray-700 text-sm font-bold mb-2" %>
+      <%= form.text_field :name, class: "form-input" %>
+    </div>
+
+    <div>
+      <%= form.label :price, class: "block text-gray-700 text-sm font-bold mb-2" %>
+      <%= form.text_field :price, class: "form-input" %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+    <div>
+      <%= form.label :description, class: "block text-gray-700 text-sm font-bold mb-2" %>
+      <%= form.text_area :description, class: "form-textarea" %>
+    </div>
+
+    <div>
+      <%= form.label :image, class: "block text-gray-700 text-sm font-bold mb-2" %>
+      <%= form.text_field :image, class: "form-input" %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+    <div>
+      <%= form.label :condition, class: "block text-gray-700 text-sm font-bold mb-2" %>
+      <%= form.text_field :condition, class: "form-input" %>
+    </div>
+
+    <div>
+      <%= form.label :size, class: "block text-gray-700 text-sm font-bold mb-2" %>
+      <%= form.text_field :size, class: "form-input" %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+    <div>
+      <%= form.label :color, class: "block text-gray-700 text-sm font-bold mb-2" %>
+      <%= form.text_field :color, class: "form-input" %>
+    </div>
+
+    <div>
+      <%= form.label :category, class: "block text-gray-700 text-sm font-bold mb-2" %>
+      <%= form.text_field :category, class: "form-input" %>
+    </div>
+  </div>
+
+  <div class="mb-4">
+    <%= form.submit class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" %>
+  </div>
+<% end %>

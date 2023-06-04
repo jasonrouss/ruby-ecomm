@@ -1,0 +1,21 @@
+<div class="max-w-sm rounded overflow-hidden shadow-lg bg-white mb-20 mx-8">
+  <img class="w-full" src="<%= @product.image %>" alt="Product Image">
+  <div class="px-6 py-4 gap-4 bg-gray-200">
+    <h1 class="my-4 font-bold text-xl text-green-600 mb-2"><%= @product.name %></h1>
+    <p class="my-4 text-gray-700 text-base">Price: $<%= @product.price %></p>
+    <p class="my-4 text-gray-700 text-base">Description: <%= @product.description %></p>
+    <p class="my-4 text-gray-700 text-base">Condition: <%= @product.condition %></p>
+    <p class="my-4 text-gray-700 text-base">Size: <%= @product.size %></p>
+    <p class="my-4 text-gray-700 text-base">Color: <%= @product.color %></p>
+    <p class="text-gray-700 text-base">Category: <%= link_to @product.category, products_by_category_path(category: @product.category) %></p>
+  </div>
+  <div class="px-6 py-4 bg-gray-200 flex justify-between">
+  <% if user_signed_in? %>
+    <%= button_to 'Add to Cart', cart_items_path(product_id: @product.id), method: :post, class: 'px-2 py-2 font-bold border-2 border-green-800 hover:bg-green-700 bg-green-600 text-white rounded-lg hover:rounded-full' %>
+   <% end %>
+  <% if admin_signed_in? %>
+   <%= link_to 'Edit', edit_product_path(@product), class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mr-2" %>
+  <% end %>
+  <%= link_to 'Back', products_path, class: "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg hover:rounded-full" %>
+  </div>
+</div>

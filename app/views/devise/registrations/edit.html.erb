@@ -1,0 +1,49 @@
+<div class=" text-gray-700">
+  <h2 class="text-2xl font-bold text-green-600 mb-4">Edit <%= resource_name.to_s.humanize %></h2>
+
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+    <div class="mb-4">
+      <%= f.label :email, class: "font-semibold" %><br />
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "border rounded p-2" %>
+    </div>
+
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <div class="mb-4">Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+    <% end %>
+
+    <div class="mb-4">
+      <%= f.label :password, class: "font-semibold" %> <i>(leave blank if you don't want to change it)</i><br />
+      <%= f.password_field :password, autocomplete: "new-password", class: "border rounded p-2" %>
+      <% if @minimum_password_length %>
+        <br />
+        <em class="text-sm"><%= @minimum_password_length %> characters minimum</em>
+      <% end %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :password_confirmation, class: "font-semibold" %><br />
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "border rounded p-2" %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :current_password, class: "font-semibold" %> <i>(we need your current password to confirm your changes)</i><br />
+      <%= f.password_field :current_password, autocomplete: "current-password", class: "border rounded p-2" %>
+    </div>
+
+    <div class="flex mb-4">
+      <%= f.submit "Update", class: "border-2 border-green-800 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg hover:rounded-full" %>
+    </div>
+  <% end %>
+
+  <h3 class="text-xl font-bold mb-4 ">Cancel my account</h3>
+<div class="flex">
+
+  <div class="mb-4 "><%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete, class: "border-2 border-slate-900 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg hover:rounded-full" %></div>
+
+  <div class="mt-2 mx-4">
+    <%= link_to "Back", :back, class: "border-2 border-slate-900 bg-gray-500 hover:bg-gray-400 text-white font-bold py-2 px-4 rounded-lg hover:rounded-full" %>
+  </div>
+</div>
+</div>
